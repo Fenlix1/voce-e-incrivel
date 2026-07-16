@@ -158,6 +158,9 @@ export function Footer() {
             &copy; {new Date().getFullYear()} Projeto Social Você é Incrível -
             Faz Teu Nome. Todos os direitos reservados.
           </p>
+          <p className="text-gray-500 text-xs">
+            Desenvolvido por <span className="text-white font-medium">Fábio Vilas Lobo Pires Toffano</span>
+          </p>
           <p className="text-gray-600 text-xs flex items-center gap-1">
             Feito com <Heart size={12} className="text-red-500" /> para a
             comunidade de Belford Roxo
