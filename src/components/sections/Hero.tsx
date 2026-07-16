@@ -98,7 +98,7 @@ export function Hero() {
           className="mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto"
         >
           {[
-            { value: "8", label: "Modalidades" },
+            { value: "9", label: "Modalidades" },
             { value: "4", label: "Públicos" },
             { value: "3", label: "Turnos" },
           ].map((stat) => (

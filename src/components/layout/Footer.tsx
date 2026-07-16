@@ -33,6 +33,7 @@ const footerLinks = [
       { label: "Boxe", href: "/modalidades#boxe" },
       { label: "Muay Thai", href: "/modalidades#muay-thai" },
       { label: "Capoeira", href: "/modalidades#capoeira" },
+      { label: "Balé", href: "/modalidades#bale" },
     ],
   },
 ];

@@ -1,4 +1,4 @@
-import { Waves, Dumbbell, Music, Swords, Flame, Heart } from "lucide-react";
+import { Waves, Dumbbell, Music, Swords, Flame, Heart, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 export interface Modality {
@@ -81,6 +81,15 @@ export const defaultModalities: Modality[] = [
     description:
       "Patrimônio cultural brasileiro que une luta, dança, música e tradição. Desenvolve flexibilidade, ritmo e consciência corporal.",
     image: "https://images.unsplash.com/photo-1588681663235-2c45f9a7b4e2?w=600&q=80",
+    schedule: "Manhã e Tarde",
+  },
+  {
+    id: "bale",
+    name: "Balé",
+    icon: "Sparkles",
+    description:
+      "Aulas de balé clássico para crianças e adolescentes. Desenvolvimento de postura, graça, disciplina e expressão artística através da dança.",
+    image: "https://images.unsplash.com/photo-1518806118471-c28a20a79d6e?w=600&q=80",
     schedule: "Manhã e Tarde",
   },
 ];

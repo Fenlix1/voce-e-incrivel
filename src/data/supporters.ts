@@ -22,6 +22,11 @@ export const defaultSupporters: Supporter[] = [
     name: "Raphael Amaral",
     role: "Apoio Cultural",
   },
+  {
+    id: "felipinho-ravis",
+    name: "Deputado Felipinho Ravis",
+    role: "Apoio Cultural",
+  },
 ];
 
 export function getSupporters(): Supporter[] {

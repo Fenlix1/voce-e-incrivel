@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Waves, Dumbbell, Music, Swords, Flame, Heart } from "lucide-react";
+import { Waves, Dumbbell, Music, Swords, Flame, Heart, Sparkles } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SectionTitle } from "@/components/shared/SectionTitle";
 import { ScrollReveal } from "@/components/shared/ScrollReveal";
@@ -14,6 +14,7 @@ const LUCIDE_ICONS: Record<string, LucideIcon> = {
   Swords,
   Flame,
   Heart,
+  Sparkles,
 };
 
 export function Modalities() {
