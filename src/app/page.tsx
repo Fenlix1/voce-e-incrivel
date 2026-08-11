@@ -9,10 +9,12 @@ import { Supporters } from "@/components/sections/Supporters";
 import { Location } from "@/components/sections/Location";
 import { Contact } from "@/components/sections/Contact";
 import { CTABanner } from "@/components/sections/CTABanner";
+import { ProspectoModal } from "@/components/shared/ProspectoModal";
 
 export default function HomePage() {
   return (
     <>
+      <ProspectoModal />
       <Hero />
       <About />
       <Modalities />
