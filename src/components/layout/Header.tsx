@@ -10,7 +10,6 @@ import { SITE_CONFIG } from "@/lib/constants";
 
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/sobre", label: "Sobre" },
   { href: "/modalidades", label: "Modalidades" },
   { href: "/galeria", label: "Galeria" },
   { href: "/eventos", label: "Eventos" },

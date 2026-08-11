@@ -15,7 +15,6 @@ const footerLinks = [
     title: "Páginas",
     links: [
       { label: "Home", href: "/" },
-      { label: "Sobre", href: "/sobre" },
       { label: "Modalidades", href: "/modalidades" },
       { label: "Galeria", href: "/galeria" },
       { label: "Eventos", href: "/eventos" },

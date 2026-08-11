@@ -1,5 +1,4 @@
 import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
 import { Modalities } from "@/components/sections/Modalities";
 import { Health } from "@/components/sections/Health";
 import { Gallery } from "@/components/sections/Gallery";
@@ -16,7 +15,6 @@ export default function HomePage() {
     <>
       <ProspectoModal />
       <Hero />
-      <About />
       <Modalities />
       <Health />
       <Gallery />
