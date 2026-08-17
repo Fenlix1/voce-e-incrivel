@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ficha de Inscrição — Criança | Você é Incrível!</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <img src="/img/logo.svg" alt="Logo Você é Incrível" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='inline-block'">
+    <span class="logo-fallback" style="display:none">🌟</span>
+    <h1>VOCÊ É INCRÍVEL! AÇÃO SOCIAL</h1>
+    <p class="subtitle">Ficha de Inscrição — Criança</p>
+    <div class="badge-row">
+      <span class="badge badge-purple">Projeto Social • Para menores de idade (preenchida pelo responsável)</span>
+      <span class="badge badge-green">Inscrição Gratuita</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="alertBox" class="alert"></div>
+
+    <form id="formCrianca">
+
+      <div class="card">
+        <div class="card-header"><h2>🧒 Dados da Criança</h2></div>
+
+        <div class="form-group">
+          <label>Nome completo da criança <span class="required">*</span></label>
+          <input type="text" name="nome" required placeholder="Nome completo">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Data de nascimento <span class="required">*</span></label>
+            <input type="date" name="data_nascimento" required onchange="calcIdade(this)">
+          </div>
+          <div class="form-group">
+            <label>Idade</label>
+            <input type="text" name="idade" id="idadeCrianca" placeholder="Auto-calculada" readonly>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Peso aproximado (kg)</label>
+            <input type="number" name="peso_aproximado" placeholder="Ex: 30" step="0.1">
+          </div>
+          <div class="form-group">
+            <label>Estatura aprox. (m)</label>
+            <input type="number" name="estatura_aproximada" placeholder="Ex: 1,30" step="0.01">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Data da última avaliação médica</label>
+          <input type="date" name="data_ultima_avaliacao_medica">
+        </div>
+      </div>
+
+      <!-- DADOS DO RESPONSÁVEL -->
+      <div class="card">
+        <div class="card-header"><h2>👨‍👩‍👧 Dados do Responsável</h2></div>
+
+        <div class="form-group">
+          <label>Nome do responsável <span class="required">*</span></label>
+          <input type="text" name="responsavel_nome" required placeholder="Nome completo do responsável">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Parentesco</label>
+            <select name="responsavel_parentesco">
+              <option value="">Selecione</option>
+              <option>Mãe</option><option>Pai</option><option>Avó</option>
+              <option>Avô</option><option>Tio(a)</option><option>Outro</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>CPF do responsável</label>
+            <input type="text" name="responsavel_cpf" placeholder="000.000.000-00" maxlength="14" oninput="maskCPF(this)">
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Telefone / WhatsApp <span class="required">*</span></label>
+            <input type="tel" name="responsavel_telefone" required placeholder="(00) 00000-0000" oninput="maskFone(this)">
+          </div>
+          <div class="form-group">
+            <label>E-mail</label>
+            <input type="email" name="responsavel_email" placeholder="email@exemplo.com">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>CEP</label>
+          <input type="text" name="cep" placeholder="00000-000" maxlength="9" oninput="maskCEP(this)" onblur="buscarCEP(this.value)">
+        </div>
+
+        <div class="form-row">
+          <div class="form-group"><label>Logradouro</label><input type="text" name="endereco" placeholder="Rua, Avenida..."></div>
+          <div class="form-group"><label>Número</label><input type="text" name="numero" placeholder="Nº"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group"><label>Bairro</label><input type="text" name="bairro"></div>
+          <div class="form-group"><label>Cidade</label><input type="text" name="cidade"></div>
+        </div>
+
+        <div class="form-group">
+          <label>UF</label>
+          <select name="uf">
+            <option value="">Selecione</option>
+            <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+            <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+            <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+            <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+            <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+            <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+            <option>SP</option><option>SE</option><option>TO</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- ESCOLA -->
+      <div class="card">
+        <div class="card-header"><h2>🏫 Situação Escolar</h2></div>
+
+        <div class="form-row">
+          <div class="form-group"><label>Situação escolar</label><input type="text" name="situacao_escolar" placeholder="Ex: Cursando, Matriculado"></div>
+          <div class="form-group"><label>Série / Ano</label><input type="text" name="serie" placeholder="Ex: 3º ano"></div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Turno</label>
+            <select name="turno">
+              <option value="">Selecione</option>
+              <option>Manhã</option><option>Tarde</option><option>Noite</option><option>Integral</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Nome da unidade escolar</label>
+            <input type="text" name="nome_unidade_escolar" placeholder="Nome da escola">
+          </div>
+        </div>
+      </div>
+
+      <!-- MODALIDADE -->
+      <div class="card">
+        <div class="card-header"><h2>🏅 Modalidade de Preferência</h2></div>
+
+        <div class="form-group">
+          <label>Escolha a(s) modalidade(s):</label>
+          <div class="checkbox-group">
+            <label class="checkbox-pill"><input type="checkbox" name="modalidade" value="Natação" onclick="limitarModalidades()"> 🏊 Natação</label>
+            <label class="checkbox-pill"><input type="checkbox" name="modalidade" value="Hidroginástica" onclick="limitarModalidades()"> 💧 Hidroginástica</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Funcional" onchange="atualizarHorarios()"> 🏋️ Funcional</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Boxe" onchange="atualizarHorarios()"> 🥊 Boxe</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Zumba" onchange="atualizarHorarios()"> 💃 Zumba</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Jiu Jitsu" onchange="atualizarHorarios()"> 🥋 Jiu Jitsu</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Muay Thai" onchange="atualizarHorarios()"> 🦵 Muay Thai</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Capoeira" onchange="atualizarHorarios()"> 🤸 Capoeira</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Pilates" onchange="atualizarHorarios()"> 🧘 Pilates</label>
+            <label class="radio-pill"><input type="radio" name="modalidade" value="Ballet" onchange="atualizarHorarios()"> 🩰 Ballet</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Horário disponível:</label>
+          <select id="horarioModalidade" name="horario">
+            <option value="">Selecione uma modalidade primeiro</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SAÚDE -->
+      <div class="card">
+        <div class="card-header"><h2>🏥 Saúde da Criança</h2></div>
+
+        <div class="form-group">
+          <label>A criança sofreu alguma intervenção cirúrgica? Qual?</label>
+          <textarea name="intervencao_cirurgica" rows="2" placeholder="Descreva se houve alguma cirurgia..."></textarea>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label>Situação vacinal</label>
+            <div class="radio-group">
+              <label class="radio-pill"><input type="radio" name="situacao_vacinal" value="Regular"> Regular</label>
+              <label class="radio-pill"><input type="radio" name="situacao_vacinal" value="Irregular" onchange="toggleCond(this,'cond-vacinal')"> Irregular</label>
+            </div>
+            <div class="conditional-field" id="cond-vacinal">
+              <label>Se irregular, especifique o que falta:</label>
+              <input type="text" name="situacao_vacinal_irregular_especifique" placeholder="O que está faltando?">
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Medicamentos utilizados nos últimos tempos</label>
+          <textarea name="medicamentos_ultimos_tempos" rows="2" placeholder="Liste os medicamentos..."></textarea>
+        </div>
+
+        <!-- Q1 -->
+        <div class="form-group">
+          <label>1 - Tem alergia?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-pill"><input type="checkbox" name="tem_alergia" value="Insetos"> 🐝 Insetos</label>
+            <label class="checkbox-pill"><input type="checkbox" name="tem_alergia" value="Medicamentos"> 💊 Medicamentos</label>
+            <label class="checkbox-pill"><input type="checkbox" name="tem_alergia" value="Alimentos"> 🍎 Alimentos</label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="form-group">
+          <label>2 - Fez ou está fazendo algum tratamento de saúde?</label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="tratamento_saude" value="Sim" onchange="toggleCond(this,'cond-trat-crianca')"> Sim</label>
+            <label class="radio-pill"><input type="radio" name="tratamento_saude" value="Não" onchange="toggleCond(this,'cond-trat-crianca')"> Não</label>
+          </div>
+          <div class="conditional-field" id="cond-trat-crianca">
+            <label>Se sim, especifique:</label>
+            <textarea name="tratamento_saude_especifique" rows="2" placeholder="Descreva o tratamento..."></textarea>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="form-group">
+          <label>3 - Faz uso de algum medicamento constante?</label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="uso_medicamento_constante" value="Sim" onchange="toggleCond(this,'cond-med-crianca')"> Sim</label>
+            <label class="radio-pill"><input type="radio" name="uso_medicamento_constante" value="Não" onchange="toggleCond(this,'cond-med-crianca')"> Não</label>
+          </div>
+          <div class="conditional-field" id="cond-med-crianca">
+            <label>Se sim, especifique:</label>
+            <textarea name="uso_medicamento_especifique" rows="2" placeholder="Nome e dosagem..."></textarea>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="form-group">
+          <label>4 - A criança apresenta algum problema de:</label>
+          <div class="checkbox-group">
+            <label class="checkbox-pill"><input type="checkbox" name="problema_tipo" value="Fala"> Fala</label>
+            <label class="checkbox-pill"><input type="checkbox" name="problema_tipo" value="Visão"> Visão</label>
+            <label class="checkbox-pill"><input type="checkbox" name="problema_tipo" value="Audição"> Audição</label>
+            <label class="checkbox-pill"><input type="checkbox" name="problema_tipo" value="Motor"> Motor</label>
+            <label class="checkbox-pill"><input type="checkbox" name="problema_tipo" value="Outras"> Outras</label>
+          </div>
+          <textarea name="problema_especifique" rows="2" placeholder="Especifique, se necessário..." style="margin-top:8px"></textarea>
+        </div>
+
+        <!-- Q5 -->
+        <div class="form-group">
+          <label>5 - A criança apresenta:</label>
+          <div class="checkbox-group">
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Bronquite"> Bronquite</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Convulsão"> Convulsão</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Infecção de ouvido"> Infecção de ouvido</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Desmaio"> Desmaio</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Epilepsia"> Epilepsia</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Diabetes"> Diabetes</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Asma"> Asma</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Rinite"> Rinite</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Sinusite"> Sinusite</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="Obesidade"> Obesidade</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="TDAH"> TDAH (déficit de atenção)</label>
+            <label class="checkbox-pill"><input type="checkbox" name="condicao_saude" value="TEA"> TEA (espectro autista)</label>
+          </div>
+          <textarea name="condicoes_saude_especifique" rows="2" placeholder="Especifique, se necessário..." style="margin-top:8px"></textarea>
+        </div>
+
+        <!-- Q6 -->
+        <div class="form-group">
+          <label>6 - Qual responsável fará o acompanhamento com mais frequência?</label>
+          <div class="checkbox-group">
+            <label class="checkbox-pill"><input type="checkbox" name="responsavel_acompanhamento" value="Mãe"> Mãe</label>
+            <label class="checkbox-pill"><input type="checkbox" name="responsavel_acompanhamento" value="Pai"> Pai</label>
+            <label class="checkbox-pill"><input type="checkbox" name="responsavel_acompanhamento" value="Avô"> Avô</label>
+            <label class="checkbox-pill"><input type="checkbox" name="responsavel_acompanhamento" value="Avó"> Avó</label>
+            <label class="checkbox-pill"><input type="checkbox" name="responsavel_acompanhamento" value="Outros"> Outros</label>
+          </div>
+          <input type="text" name="responsavel_acompanhamento_outros" placeholder="Se outros, especifique:" style="margin-top:8px">
+        </div>
+
+        <!-- Q7 -->
+        <div class="form-group">
+          <label>7 - A criança tem algum problema de saúde que impossibilita a prática de atividades físicas?</label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="problema_impossibilita_atividade_fisica" value="Sim" onchange="toggleCond(this,'cond-impossib')"> Sim</label>
+            <label class="radio-pill"><input type="radio" name="problema_impossibilita_atividade_fisica" value="Não" onchange="toggleCond(this,'cond-impossib')"> Não</label>
+          </div>
+          <div class="conditional-field" id="cond-impossib">
+            <label>Se sim, especifique:</label>
+            <textarea name="problema_impossibilita_especifique" rows="2" placeholder="Descreva o problema..."></textarea>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="form-group">
+          <label>8 - Já teve hepatite?</label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="teve_hepatite" value="Sim"> Sim</label>
+            <label class="radio-pill"><input type="radio" name="teve_hepatite" value="Não"> Não</label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="form-group">
+          <label>9 - Possui algum convênio médico?</label>
+          <div class="radio-group">
+            <label class="radio-pill"><input type="radio" name="possui_convenio_medico" value="Sim" onchange="toggleCond(this,'cond-convenio')"> Sim</label>
+            <label class="radio-pill"><input type="radio" name="possui_convenio_medico" value="Não" onchange="toggleCond(this,'cond-convenio')"> Não</label>
+          </div>
+          <div class="conditional-field" id="cond-convenio">
+            <label>Se sim, qual?</label>
+            <input type="text" name="convenio_medico_qual" placeholder="Nome do convênio">
+          </div>
+        </div>
+      </div>
+
+      <!-- TERMO -->
+      <div class="card">
+        <div class="card-header"><h2>✍️ Termo de Compromisso</h2></div>
+
+        <div class="compromisso-box">
+          <p>Eu me comprometo a frequentar as aulas do projeto, respeitando os <strong>75% de presença</strong>. Também informo que tenho conhecimento das regras do projeto, inclusive de que o abandono do projeto implica no não aceite de inscrições em outras modalidades oferecidas pelo <strong>Projeto Social: Você é Incrível!</strong></p>
+        </div>
+
+        <div class="obs-box">
+          <strong>⚠️ Importante:</strong> A criança precisa estar com matrícula escolar ativa e frequentando a escola para participar do projeto. No ato da matrícula do projeto, apresentar declaração e histórico escolar.
+        </div>
+
+        <div class="form-group">
+          <label class="checkbox-pill" style="display:inline-flex; font-size:0.9rem">
+            <input type="checkbox" name="termo_compromisso" required id="termoCheckCrianca">
+            Li e concordo com o termo de compromisso e declaro que as informações são verdadeiras. <span class="required">*</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>Assinatura do responsável</label>
+          <canvas id="signatureCanvas" class="signature-area" width="600" height="120"></canvas>
+          <input type="hidden" name="assinatura" id="signatureData">
+          <div style="text-align:right; margin-top:4px;">
+            <button type="button" class="btn btn-outline btn-sm" onclick="clearSignature()">🗑️ Limpar assinatura</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTÕES -->
+      <div class="form-actions">
+        <button type="button" class="btn btn-outline" onclick="limparFormulario()">🧹 Limpar</button>
+        <button type="submit" class="btn btn-pink" id="btnSalvar">
+          💾 Salvar Inscrição
+          <span class="loading-spinner" id="loadingSpinner"></span>
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- MODAL SUCESSO -->
+  <div class="modal-overlay" id="modalSucesso">
+    <div class="modal">
+      <span class="success-icon">✅</span>
+      <h3>Inscrição Realizada com Sucesso!</h3>
+      <p style="font-size:1.3rem;font-weight:700;color:var(--purple);margin:10px 0" id="modalMatricula">Matrícula: ---</p>
+      <p>A inscrição da criança foi salva em nosso sistema.</p>
+      <div class="modal-actions">
+        <a href="/crianca" class="btn btn-pink">📝 Nova Inscrição</a>
+        <a href="/" class="btn btn-outline">🏠 Voltar ao Início</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-contact">
+      <span>💬 (21) 98144-3105</span>
+    </div>
+    <p>📍 <strong>Espaço Mansão Faz Teu Nome</strong> — Barro Vermelho, Belford Roxo / RJ</p>
+    <p class="footer-partners">Apoio cultural: Amigo Pires • Dep. Federal Doutor Luizinho • Rafael Amaral</p>
+  </footer>
+
+  <script src="/js/shared.js"></script>
+  <script>
+    // Inicializar canvas de assinatura
+    initSignaturePad();
+  </script>
+</body>
+</html>

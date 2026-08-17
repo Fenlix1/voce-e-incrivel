@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Projeto Social Server",
+      "runtimeExecutable": "C:\\Users\\Luisa\\.claude\\ProjetoSocial\\nodejs\\node-v20.18.0-win-x64\\node.exe",
+      "runtimeArgs": ["server.js"],
+      "port": 3000
+    }
+  ]
+}

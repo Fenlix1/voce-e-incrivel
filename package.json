@@ -1,0 +1,19 @@
+{
+  "name": "projeto-social-voce-e-incrivel",
+  "version": "1.0.0",
+  "description": "Sistema de Ficha de Inscrição - Projeto Social: Você é Incrível!",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "@netlify/blobs": "^10.7.9",
+    "@supabase/supabase-js": "^2.109.0",
+    "express": "^4.18.2",
+    "netlify-cli": "^26.1.0",
+    "pg": "^8.22.0",
+    "serverless-http": "^4.0.0",
+    "ws": "^8.21.0"
+  }
+}

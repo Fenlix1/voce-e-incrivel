@@ -1,0 +1,4 @@
+DELETE FROM adultos;
+DELETE FROM criancas;
+ALTER SEQUENCE adultos_id_seq RESTART WITH 1;
+ALTER SEQUENCE criancas_id_seq RESTART WITH 1;

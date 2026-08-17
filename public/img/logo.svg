@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 140" width="400" height="140">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7b2ff7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3b82f6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="heart" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#e94560;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ff6b81;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Círculo externo -->
+  <circle cx="200" cy="70" r="65" fill="none" stroke="url(#grad)" stroke-width="3" opacity="0.6"/>
+
+  <!-- Texto "VOCÊ É" -->
+  <text x="200" y="52" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="22" fill="url(#grad)" letter-spacing="1">
+    VOCÊ É
+  </text>
+
+  <!-- Texto "INCRÍVEL!" -->
+  <text x="200" y="82" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="28" fill="url(#grad)" letter-spacing="1">
+    INCRÍVEL!
+  </text>
+
+  <!-- Coração -->
+  <path d="M200 100 C200 95, 188 88, 180 88 C168 88, 162 100, 162 105 C162 115, 200 128, 200 128 C200 128, 238 115, 238 105 C238 100, 232 88, 220 88 C212 88, 200 95, 200 100 Z" fill="url(#heart)" opacity="0.9"/>
+
+  <!-- Pequena estrela decorativa -->
+  <circle cx="145" cy="45" r="2" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="255" cy="45" r="2" fill="#fbbf24" opacity="0.8"/>
+  <circle cx="120" cy="75" r="1.5" fill="#fbbf24" opacity="0.6"/>
+  <circle cx="280" cy="75" r="1.5" fill="#fbbf24" opacity="0.6"/>
+</svg>
