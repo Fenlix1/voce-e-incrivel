@@ -317,6 +317,159 @@ document.getElementById('btnImprimirTodosAZ').addEventListener('click', function
   imprimirListaAZ('📋 Todos — Ordem Alfabética', dados);
 });
 
+// IMPRIMIR TODOS ALUNOS (com telefone + endereço)
+document.getElementById('btnImprimirTodosContato').addEventListener('click', function() {
+  var dados = (RD.criancas.concat(RD.adultos)).slice().sort(function(a,b){ return (a.nome||'').localeCompare(b.nome||''); });
+  imprimirTodosContato(dados);
+});
+document.getElementById('btnImprimirAdultosContato').addEventListener('click', function() {
+  imprimirTodosContato(RD.adultos.slice().sort(function(a,b){ return (a.nome||'').localeCompare(b.nome||''); }));
+});
+document.getElementById('btnImprimirCriancasContato').addEventListener('click', function() {
+  imprimirTodosContato(RD.criancas.slice().sort(function(a,b){ return (a.nome||'').localeCompare(b.nome||''); }));
+});
+
+function imprimirTodosContato(dados) {
+  if (!dados || dados.length === 0) { alert('Nenhum dado disponível. Carregue os relatórios primeiro.'); return; }
+  var w = window.open('about:blank', '_blank', 'width=900,height=700');
+  var now = new Date().toLocaleDateString('pt-BR');
+  var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Lista de Contatos</title>'+
+    '<style>'+
+    '*{box-sizing:border-box}'+
+    'html,body{font-family:Arial,sans-serif;margin:0;padding:8px 6px;color:#222;overflow:visible!important;height:auto!important}'+
+    'h1{text-align:center;color:#5a1e99;margin:0 0 2px 0;font-size:1.1rem}'+
+    'h2{text-align:center;color:#7b2ff7;margin:0 0 4px 0;font-size:0.9rem}'+
+    '.bar{background:linear-gradient(135deg,#e94560,#7b2ff7,#3b82f6);height:2px;margin-bottom:8px;border-radius:3px}'+
+    '.no-print{display:block}'+
+    'table{width:100%;border-collapse:collapse;font-size:0.58rem}'+
+    'thead{display:table-header-group!important}'+
+    'tr{page-break-inside:auto;page-break-after:auto}'+
+    'th{background:#e2e4ea!important;padding:1px 3px!important;text-align:left;border-bottom:1px solid #ccc;font-size:0.52rem;font-weight:700;-webkit-print-color-adjust:exact}'+
+    'td{padding:0px 3px!important;border-bottom:1px solid #f0f0f0;font-size:0.52rem;line-height:1.15}'+
+    '.child td{background:#fffef5}.adult td{background:#faf8ff}'+
+    '@media print{'+
+    '  html,body{height:auto!important;overflow:visible!important;min-height:0!important;max-height:none!important}'+
+    '  .no-print{display:none!important}'+
+    '}'+
+    '</style></head><body>'+
+    '<div class="bar"></div><h1>🌟 Projeto Social: Você é Incrível!</h1>'+
+    '<h2>📋 Lista de Contatos — '+dados.length+' aluno(s)</h2><p style="text-align:center;color:#999">'+now+'</p>'+
+    '<p class="no-print" style="text-align:center"><button onclick="window.print()" style="background:#e94560;color:white;border:none;padding:10px 28px;border-radius:25px;font-size:1rem;cursor:pointer;font-weight:600;margin-bottom:16px">🖨️ Salvar PDF</button></p>'+
+    '<table><thead><tr><th>#</th><th>Nome</th><th>Telefone</th><th>Endereço</th><th>Bairro</th><th>Cidade/UF</th><th>Modalidade</th></tr></thead><tbody>';
+  dados.forEach(function(d, idx) {
+    var isAdulto = !!(d.profissao || d.cpf || d.sexo);
+    var cls = isAdulto ? 'adult' : 'child';
+    var telefone = d.telefone || d.responsavel_telefone || '-';
+    var endereco = d.endereco || '-';
+    if (d.numero) endereco += ', ' + d.numero;
+    html += '<tr class="'+cls+'"><td>'+(idx+1)+'</td><td><strong>'+esc(d.nome)+'</strong></td><td>'+esc(telefone)+'</td><td>'+esc(endereco)+'</td><td>'+esc(d.bairro||'-')+'</td><td>'+esc(d.cidade||'-')+(d.uf?'/'+d.uf:'')+'</td><td>'+esc(d.modalidade||'-')+'</td></tr>';
+  });
+  html += '</tbody></table><p class="no-print" style="text-align:center;color:#999;font-size:0.75rem;margin-top:20px">Impresso em: '+now+' | Projeto Social: Você é Incrível!</p></body></html>';
+  w.document.write(html); w.document.close();
+}
+
+// ANIVERSARIANTES DO MÊS
+function verificarAniversariantes() {
+  var all = (RD.criancas||[]).concat(RD.adultos||[]);
+  var mesAtual = new Date().getMonth();
+  var diaAtual = new Date().getDate();
+  var aniversariantesMes = [];
+  var aniversariantesHoje = [];
+  all.forEach(function(d) {
+    if (!d.data_nascimento) return;
+    var p = d.data_nascimento.split('-');
+    if (p.length < 3) return;
+    var mes = Number(p[1]) - 1;
+    var dia = Number(p[2]);
+    var isAdulto = !!(d.profissao || d.cpf || d.sexo);
+    var telefone = d.telefone || d.responsavel_telefone || '-';
+    if (mes === mesAtual) {
+      aniversariantesMes.push({ nome: d.nome, dia: dia, telefone: telefone, modalidade: d.modalidade||'-', tipo: isAdulto?'Adulto':'Criança' });
+      if (dia === diaAtual) {
+        aniversariantesHoje.push({ nome: d.nome, telefone: telefone, modalidade: d.modalidade||'-' });
+      }
+    }
+  });
+  aniversariantesMes.sort(function(a,b){ return a.dia - b.dia; });
+  renderizarAniversariantes(aniversariantesMes, aniversariantesHoje);
+}
+
+function renderizarAniversariantes(mes, hoje) {
+  var container = document.getElementById('listaAniversariantes');
+  if (!container) return;
+  var html = '';
+  if (hoje.length > 0) {
+    html += '<div style="background:#fef3c7;border:2px solid #f59e0b;border-radius:10px;padding:14px;margin-bottom:16px">';
+    html += '<h4 style="color:#92400e;margin-bottom:8px">🎂 Aniversariantes de HOJE ('+hoje.length+')</h4>';
+    hoje.forEach(function(a) {
+      var msg = encodeURIComponent('Olá '+a.nome+'! 🎉🎂\n\nO Projeto Social: Você é Incrível! deseja um Feliz Aniversário!\nQue esse novo ano seja repleto de saúde, amor e muitas conquistas! 💪🌟\n\n venha celebrar com a gente! 🏅');
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;padding:8px;border-bottom:1px solid #fde68a;font-size:0.9rem">'+
+        '<div><strong>'+esc(a.nome)+'</strong> — '+esc(a.modalidade)+'</div>'+
+        '<a href="https://wa.me/55'+a.telefone.replace(/\D/g,'')+'?text='+msg+'" target="_blank" style="background:#25D366;color:white;padding:6px 14px;border-radius:20px;text-decoration:none;font-weight:600;font-size:0.8rem">📱 Enviar Parabéns</a>'+
+        '</div>';
+    });
+    html += '</div>';
+  }
+  if (mes.length > 0) {
+    html += '<div style="background:#f0fdf4;border:1px solid #86efac;border-radius:10px;padding:14px">';
+    html += '<h4 style="color:#166534;margin-bottom:8px">📅 Aniversariantes do Mês ('+mes.length+')</h4>';
+    html += '<table style="width:100%;border-collapse:collapse;font-size:0.85rem">';
+    html += '<tr style="background:#dcfce7"><th style="padding:6px;text-align:left">Dia</th><th style="padding:6px;text-align:left">Nome</th><th style="padding:6px;text-align:left">Tipo</th><th style="padding:6px;text-align:left">Telefone</th><th style="padding:6px;text-align:left">Ação</th></tr>';
+    mes.forEach(function(a) {
+      var msg = encodeURIComponent('Olá '+a.nome+'! 🎉🎂\n\nO Projeto Social: Você é Incrível! deseja um Feliz Aniversário!\nQue esse novo ano seja repleto de saúde, amor e muitas conquistas! 💪🌟\n\n venha celebrar com a gente! 🏅');
+      html += '<tr><td style="padding:4px 6px;font-weight:700;color:#166534">'+a.dia+'</td>'+
+        '<td style="padding:4px 6px"><strong>'+esc(a.nome)+'</strong></td>'+
+        '<td style="padding:4px 6px">'+esc(a.tipo)+'</td>'+
+        '<td style="padding:4px 6px">'+esc(a.telefone)+'</td>'+
+        '<td style="padding:4px 6px"><a href="https://wa.me/55'+a.telefone.replace(/\D/g,'')+'?text='+msg+'" target="_blank" style="background:#25D366;color:white;padding:4px 10px;border-radius:14px;text-decoration:none;font-size:0.75rem;font-weight:600">📱 WhatsApp</a></td></tr>';
+    });
+    html += '</table></div>';
+  }
+  if (mes.length === 0 && hoje.length === 0) {
+    html = '<p style="text-align:center;color:#999;padding:20px">Nenhum aniversariante este mês.</p>';
+  }
+  container.innerHTML = html;
+}
+
+document.getElementById('btnVerificarAniversariantes').addEventListener('click', verificarAniversariantes);
+
+// Enviar parabéns em massa (todos aniversariantes do mês)
+document.getElementById('btnEnviarParabensMassa').addEventListener('click', function() {
+  var all = (RD.criancas||[]).concat(RD.adultos||[]);
+  var mesAtual = new Date().getMonth();
+  var aniversariantes = [];
+  all.forEach(function(d) {
+    if (!d.data_nascimento) return;
+    var p = d.data_nascimento.split('-');
+    if (p.length < 3) return;
+    var mes = Number(p[1]) - 1;
+    var dia = Number(p[2]);
+    var isAdulto = !!(d.profissao || d.cpf || d.sexo);
+    var telefone = d.telefone || d.responsavel_telefone || '';
+    if (mes === mesAtual && telefone && telefone !== '-') {
+      aniversariantes.push({ nome: d.nome, telefone: telefone.replace(/\D/g,'') });
+    }
+  });
+  if (aniversariantes.length === 0) {
+    alert('Nenhum aniversariante com telefone este mês.');
+    return;
+  }
+  var msg = 'Olá [NOME]! 🎉🎂\n\nO Projeto Social: Você é Incrível! deseja um Feliz Aniversário!\nQue esse novo ano seja repleto de saúde, amor e muitas conquistas! 💪🌟\n\n venha celebrar com a gente! 🏅';
+  var lista = aniversariantes.map(function(a) {
+    return a.nome + ' → wa.me/55' + a.telefone;
+  }).join('\n');
+  var confirmar = confirm('Enviar parabéns via WhatsApp para ' + aniversariantes.length + ' aniversariante(s)?\n\n' + lista);
+  if (confirmar) {
+    aniversariantes.forEach(function(a, i) {
+      setTimeout(function() {
+        var texto = msg.replace('[NOME]', a.nome);
+        var link = 'https://wa.me/55' + a.telefone + '?text=' + encodeURIComponent(texto);
+        window.open(link, '_blank');
+      }, i * 2000);
+    });
+  }
+});
+
 // IMPRIMIR POR TURMA (modalidade + horário)
 // Popula dropdown de modalidades na aba relatórios
 function atualizarModTurma() {
